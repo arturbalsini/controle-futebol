@@ -19,7 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function () {
     Route::resources([
-        'times' => 'TimesController'
+        'times' => 'TimesController',
+        'jogadors' => 'JogadorsController',
+        'posicoes' => 'PosicoesController'
     ]);
 
 });

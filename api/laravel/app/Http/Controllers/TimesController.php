@@ -24,7 +24,7 @@ class TimesController extends Controller
         return $time;
     }
 
-    public function destroy(Request $request, Time $time){
+    public function destroy(Time $time){
         $time->delete();
         return Time::all();
     }

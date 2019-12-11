@@ -12,17 +12,17 @@
           <download-excel
             style="margin: 15px;"
             class   = "btn btn-primary"
-            :data   = "times"
+            :data   = "jogadores"
             :fields = "fieldsExcel"
-            worksheet = "Times"
-            name    = "Times.xls">
+            worksheet = "Jogadores"
+            name    = "jogadores.xls">
 
             <i class="fas fa-file-excel"></i> Exportar Excel
 
           </download-excel>
         </b-col>
         <b-col cols="3">
-          <b-button variant="success" style="margin: 15px;" v-on:click="goToNew"><i class="fas fa-plus"></i> Novo Time</b-button>
+          <b-button variant="success" style="margin: 15px;" v-on:click="goToNew"><i class="fas fa-plus"></i> Novo Jogador</b-button>
         </b-col>
         <b-col cols="12">
           <b-table
@@ -30,7 +30,7 @@
             striped
             responsive
             sortable
-            :items="times"
+            :items="jogadores"
             :fields="fields"
             :per-page="perPage"
             :current-page="currentPage"
@@ -38,7 +38,7 @@
           >
             <template v-slot:cell(opção)="row">
               <b-button variant="success" v-on:click="goToView(row.item.id)"><i class="fas fa-search"></i> Ver</b-button>
-              <b-button variant="danger" v-on:click="deletaTime(row.item.id)"><i class="fas fa-times"></i> Excluir</b-button>
+              <b-button variant="danger" v-on:click="deletaJogador(row.item.id)"><i class="fas fa-times"></i> Excluir</b-button>
             </template>
           </b-table>
         </b-col>
@@ -57,19 +57,33 @@
 
 <script>
 export default {
-  name: 'lista-times',
+  name: 'lista-jogadores',
   data () {
     return {
       fields: [
         { key: 'id', sortable: true },
         { key: 'nome', sortable: true },
-        { key: 'sigla', sortable: true },
-        { key: 'opção', sortable: false }
+        { key: 'descricao', label: 'Posição', sortable: true },
+        { key: 'nome_time', label: 'Time', sortable: true },
+        { key: 'ataque', sortable: true },
+        { key: 'defesa', sortable: true },
+        { key: 'fisico', label: 'Físico', sortable: true },
+        { key: 'drible', sortable: true },
+        { key: 'chute', sortable: true },
+        { key: 'passe', sortable: true },
+        { key: 'opção', sortable: true }
       ],
       fieldsExcel: {
         id: 'id',
         nome: 'nome',
-        sigla: 'sigla'
+        descricao: 'descricao',
+        nome_time: 'nome_time',
+        ataque: 'ataque',
+        defesa: 'defesa',
+        fisico: 'fisico',
+        drible: 'drible',
+        chute: 'chute',
+        passe: 'passe'
       },
       perPage: 10,
       currentPage: 1,
@@ -77,16 +91,16 @@ export default {
     }
   },
   methods: {
-    deletaTime: function (id) {
-      this.$store.dispatch('deleteTime', id).then(res => {
+    deletaJogador: function (id) {
+      this.$store.dispatch('deleteJogador', id).then(res => {
         this.msgTela('Time excluido com sucesso!', 'success')
       })
     },
     goToView: function (id) {
-      this.$router.push('/times/' + id)
+      this.$router.push('/jogadores/' + id)
     },
     goToNew: function (id) {
-      this.$router.push('/times/create')
+      this.$router.push('/jogadores/create')
     },
     msgTela: function (msg, variant) {
       this.$bvToast.toast(msg, {
@@ -98,15 +112,15 @@ export default {
     }
   },
   computed: {
-    times () {
-      return this.$store.state.times.listaTimes
+    jogadores () {
+      return this.$store.state.jogadores.listaJogadores
     },
     rows () {
-      return this.times.length
+      return this.jogadores.length
     }
   },
   created () {
-    this.$store.dispatch('getTimes')
+    this.$store.dispatch('getJogadores')
   }
 }
 </script>

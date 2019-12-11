@@ -10,6 +10,8 @@ import VueRouter from 'vue-router'
 import VuexStore from './vuex/store'
 import App from './App'
 import routes from './router'
+import JsonCSV from 'vue-json-csv'
+import JsonExcel from 'vue-json-excel'
 
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -22,6 +24,9 @@ Vue.use(Vuex)
 Vue.use(VueResource)
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
+
+Vue.component('downloadCsv', JsonCSV)
+Vue.component('downloadExcel', JsonExcel)
 
 Vue.http.options.root = process.env.SERVER
 
